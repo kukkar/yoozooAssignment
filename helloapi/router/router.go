@@ -1,12 +1,19 @@
 package router
 
 import (
-	"log"
+	"fmt"
 	"net/http"
 	"yoozooAssignment/helloapi/controller"
 )
 
+//
+//BootStrap the Server
+//
 func BootStrap() {
+	//Home Page route
 	http.HandleFunc("/", controller.HomePage)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 }

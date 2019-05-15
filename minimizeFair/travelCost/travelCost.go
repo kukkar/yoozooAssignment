@@ -22,7 +22,9 @@ func TravelCost(people, destinations []string) Solution {
 	person := tmpPeople[0]
 	tmpPeople = tmpPeople[1:]
 
-	solutions := make([]Solution, 0, len(destinations))
+	// solutions := make([]Solution, 0, len(destinations))
+	var minSoln Solution
+
 	//check for all destinations
 	for k, destination := range destinations {
 
@@ -42,24 +44,11 @@ func TravelCost(people, destinations []string) Solution {
 		soln.Cost = soln.Cost + recvdSoln.Cost
 		soln.Path = fmt.Sprintf("%s | %s", soln.Path, recvdSoln.Path)
 
-		solutions = append(solutions, soln)
-	}
-
-	return getMinSoln(solutions)
-}
-
-//
-//find minimum solution
-//
-func getMinSoln(s []Solution) Solution {
-
-	var minIndex int
-	var minValue int = -1
-	for k, soln := range s {
-		if (minValue == -1) || (minValue > soln.Cost) {
-			minIndex = k
-			minValue = soln.Cost
+		if soln.Cost < minSoln.Cost || minSoln.Cost == 0 {
+			minSoln = soln
 		}
+
 	}
-	return s[minIndex]
+
+	return minSoln
 }
